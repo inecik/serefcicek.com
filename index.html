@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-88SNJTLGD5"></script>
@@ -59,7 +59,8 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            margin: 10px auto;
+            margin-top: 25px;
+            margin-bottom: -5px;
             border: 3px solid var(--primary-color);
             object-fit: cover;
             transition: transform var(--transition-speed);
@@ -183,7 +184,17 @@
             }
         }
         /* ------- language switcher ------- */
-        .lang-switcher{display:flex;justify-content:center;gap:6px;position:absolute;top:20px;left:50%;transform:translateX(-50%)}
+        /* mutlak konumu kaldır, akış içinde kalsın ve foto ile araya boşluk gelsin */
+        .lang-switcher{
+            display:flex;
+            justify-content:center;
+            gap:6px;
+            margin-bottom:20px;
+            position:static;   /* position:absolute; satırı kaldırıldı */
+            transform:none;    /* translateX(-50%) kaldırıldı */
+            top:auto;
+            left:auto;
+        }
         .lang-btn{padding:6px 12px;font-size:.8rem;border:1px solid var(--primary-color);background:#fff;color:var(--primary-color);cursor:pointer;border-radius:6px;transition:all var(--transition-speed)}
         .lang-btn.active,.lang-btn:hover{background:var(--primary-color);color:#fff}
 
@@ -298,7 +309,7 @@
 
         /* ----------------- LANGUAGE HANDLER ----------------- */
         function setLanguage(lang){
-            const dict = translations[lang] || translations.tr;
+            const dict = translations[lang] || translations.en;
             document.documentElement.lang = lang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -309,8 +320,8 @@
         }
 
         // Initial load: use previously chosen language or browser default
-        const userLang = localStorage.getItem('lang') || (navigator.language || 'tr').slice(0,2);
-        setLanguage(['tr','en','de', 'ko'].includes(userLang) ? userLang : 'tr');
+        const userLang = localStorage.getItem('lang') || (navigator.language || 'en').slice(0,2);
+        setLanguage(['tr','en','de', 'ko'].includes(userLang) ? userLang : 'en');
 
         // Button click events
         document.querySelectorAll('.lang-btn').forEach(btn => {
