@@ -59,7 +59,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            margin: 20px auto;
+            margin: 10px auto;
             border: 3px solid var(--primary-color);
             object-fit: cover;
             transition: transform var(--transition-speed);
@@ -182,6 +182,10 @@
                 font-size: 2.5rem;
             }
         }
+        /* ------- language switcher ------- */
+        .lang-switcher{display:flex;justify-content:center;gap:6px;position:absolute;top:20px;left:50%;transform:translateX(-50%)}
+        .lang-btn{padding:6px 12px;font-size:.8rem;border:1px solid var(--primary-color);background:#fff;color:var(--primary-color);cursor:pointer;border-radius:6px;transition:all var(--transition-speed)}
+        .lang-btn.active,.lang-btn:hover{background:var(--primary-color);color:#fff}
 
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&display=swap" rel="stylesheet">
@@ -189,63 +193,130 @@
 <body>
     <div class="container">
         <section class="profile-section">
+            <!-- Language selector centered above image -->
+            <div class="lang-switcher">
+                <button class="lang-btn" data-lang="tr">TR</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="ko">KO</button>
+            </div>
             <img src="/images/your-photo.jpg" alt="Şeref Çiçek" class="profile-img">
-            <h1>Şeref Çiçek</h1>
-            <p class="position">UEFA Pro Lisanslı Antrenör ve Spor Bilimci<br>
-            <!-- <p class="status">🚧 Website Under Construction 🚧</p> -->
+            <h1 data-i18n="name"></h1>
+            <p class="position" data-i18n="position"></p>
         </section>
 
         <section class="bio-section">
             <div class="bio">
-                <p>
-                    <strong>Doç. Dr. Şeref Çiçek</strong>, spor biliminin titiz akademik disiplinini yeşil sahaların yüksek tempolu rekabetiyle harmanlayabilen ender isimlerden biridir. 
-                    Orta Doğu
-                    Teknik Üniversitesi’nde tamamladığı <em>spor bilimi doktorası</em> ona oyunun en ince
-                    nüanslarını veriye dayalı analizlerle çözümleme yetkinliği kazandırırken,
-                    UEFA Pro Lisansı bu teorik zenginliği sahaya stratejik üstünlük olarak yansıtmasının
-                    kapısını aralamıştır.
-                </p>
-                <p>
-                    Gençlerbirliği altyapısında tohumlarını attığı antrenörlük kariyeri, Güney Kore’de
-                    <strong>FC Seoul</strong> bünyesinde kazandığı uluslararası vizyonla perçinlendi. Tribünlerin
-                    ateşli yankıları eşliğinde, <strong>Trabzonspor</strong>’un 2010 Türkiye Kupası zaferinde
-                    teknik ekibin belkemiğini oluşturdu; <strong>Bursaspor</strong>’un 2014-15 sezonundaki ivmeli 
-                    çıkışına itici güç kattı. 
-                    En parlak sayfalar ise 2015-2019 yıllarında <strong>Beşiktaş JK</strong>’nin arka arkaya
-                    yaşadığı Süper Lig şampiyonluklarında yazıldı: Çiçek, takımın taktik derinliğini
-                    pekiştirerek kupaların gölgesine adını ilmik ilmik nakşetti. 
-                    Aynı dönemde <strong>Türkiye A Millî Takımı</strong>’nın
-                    Avrupa Şampiyonası eleme grubundaki başarılı serisinde saha kenarındaki analitik
-                    katkılarıyla da kilit rol oynadı.
-                </p>
-                <p>
-                    Analitik zarafetle harmanladığı <em>oyun içi sezgisi</em>, görev yaptığı her kulübün
-                    performans çıtasını yukarı taşıdı. Şeref Çiçek bugün, geçmiş başarılarının
-                    ötesinde, futbolun bilimle kesiştiği ufuk çizgisini sabırla genişleten bir
-                    <em>vizyoner</em> ve <em>kazanma kültürünün mimarı</em>
-                    olarak anılmaktadır.
-                </p>
+                <p data-i18n="bio1"></p>
+                <p data-i18n="bio2"></p>
+                <p data-i18n="bio3"></p>
             </div>
-        </section> 
+        </section>
 
         <div class="social-links">
-            <a href="https://linkedin.com/in/seref-cicek" class="social-link" target="_blank">
-                LinkedIn
-            </a>
-            <a href="https://tr.wikipedia.org/wiki/Şeref_Çiçek" class="social-link" target="_blank">
-                Vikipedi
-            </a>
-            <a href="https://www.transfermarkt.com.tr/seref-cicek/profil/trainer/22417" class="social-link" target="_blank">
-                Transfermarkt
-            </a>
-            <a href="https://basinda.metu.edu.tr/2016-06-23/340685" class="social-link" target="_blank">
-                ODTÜ
-            </a>
+            <a href="https://linkedin.com/in/seref-cicek" class="social-link" target="_blank" data-i18n="linkedin"></a>
+            <a href="https://tr.wikipedia.org/wiki/Şeref_Çiçek" class="social-link" target="_blank" data-i18n="wikipedia"></a>
+            <a href="https://www.transfermarkt.com.tr/seref-cicek/profil/trainer/22417" class="social-link" target="_blank" data-i18n="transfermarkt"></a>
+            <!-- <a href="https://basinda.metu.edu.tr/2016-06-23/340685" class="social-link" target="_blank" data-i18n="odtu"></a> -->
         </div>
 
         <footer>
-            <p>© 2025 Şeref Çiçek. Tüm hakları saklıdır.</p>
+            <p data-i18n="footer"></p>
         </footer>
     </div>
+
+
+    <script>
+    /*
+     |------------------------------------------------------------------
+     |  i18n initialisation – wrapped in an IIFE so we don’t pollute the
+     |  global scope every time the browser or a hot‑reload re‑executes
+     |  this script.  It also guards against duplicate variable errors
+     |  by checking whether we already placed our objects on `window`.
+     |------------------------------------------------------------------
+    */
+    (() => {
+        // Prevent the whole block from running twice (e.g. in live reload)
+        if (window.i18nInitialised) return;
+        window.i18nInitialised = true;
+
+        /* ----------------- TRANSLATION DICTIONARY ----------------- */
+        // Attach to `window` only if it isn’t there yet to avoid the
+        // "Can't create duplicate variable" SyntaxError.
+        window.translations = window.translations || {
+            tr: {
+                name: "Şeref Çiçek",
+                position: "UEFA Pro Lisanslı Antrenör ve Spor Bilimci",
+                bio1: `<strong>Doç. Dr. Şeref Çiçek</strong>, spor biliminin titiz akademik disiplinini yeşil sahaların yüksek tempolu rekabetiyle harmanlayabilen ender isimlerden biridir.  Orta Doğu Teknik Üniversitesi’nde tamamladığı <em>spor bilimi doktorası</em> ona oyunun en ince nüanslarını veriye dayalı analizlerle çözümleme yetkinliği kazandırırken, UEFA Pro Lisansı bu teorik zenginliği sahaya stratejik üstünlük olarak yansıtmasının kapısını aralamıştır.`,
+                bio2: `Gençlerbirliği altyapısında tohumlarını attığı antrenörlük kariyeri, Güney Kore’de <strong>FC Seoul</strong> bünyesinde kazandığı uluslararası vizyonla perçinlendi. Tribünlerin ateşli yankıları eşliğinde, <strong>Trabzonspor</strong>’un 2010 Türkiye Kupası zaferinde teknik ekibin belkemiğini oluşturdu; <strong>Bursaspor</strong>’un 2014-15 sezonundaki ivmeli  çıkışına itici güç kattı.  En parlak sayfalar ise 2015-2019 yıllarında <strong>Beşiktaş JK</strong>’nin arka arkaya yaşadığı Süper Lig şampiyonluklarında yazıldı: Çiçek, takımın taktik derinliğini pekiştirerek kupaların gölgesine adını ilmik ilmik nakşetti.`,
+                bio3: `Aynı dönemde <strong>Türkiye A Millî Takımı</strong>’nın Avrupa Şampiyonası eleme grubundaki başarılı serisinde saha kenarındaki analitik katkılarıyla da kilit rol oynadı. Analitik zarafetle harmanladığı <em>oyun içi sezgisi</em>, görev yaptığı her kulübün performans çıtasını yukarı taşıdı. Şeref Çiçek bugün, geçmiş başarılarının ötesinde, futbolun bilimle kesiştiği ufuk çizgisini sabırla genişleten bir <em>vizyoner</em> ve <em>kazanma kültürünün mimarı</em> olarak anılmaktadır.`,
+                linkedin: "LinkedIn",
+                wikipedia: "Vikipedi",
+                transfermarkt: "Transfermarkt",
+                odtu: "ODTÜ Basın",
+                footer: "© 2025 Şeref Çiçek. Tüm hakları saklıdır."
+            },
+            en: {
+                "name": "Şeref Çiçek",
+                "position": "UEFA Pro-Licensed Coach & Sports Scientist",
+                "bio1": "<strong>Assoc. Prof. Dr. Şeref Çiçek</strong> is one of the rare figures capable of fusing the rigorous academic discipline of sports science with the high-tempo competition of the pitch. The <em>Ph.D. in Sports Science</em> he earned at Middle East Technical University endowed him with the ability to decipher the game’s subtlest nuances through data-driven analysis, while his UEFA Pro Licence unlocked the path to translating that theoretical wealth into strategic dominance on the field.",
+                "bio2": "The coaching career he sowed within <strong>Gençlerbirliği</strong>’s youth academy was solidified by the international vision he gained at <strong>FC Seoul</strong> in South Korea. Amid the fiery echo of the terraces, he formed the backbone of the technical staff behind <strong>Trabzonspor</strong>’s 2010 Turkish Cup triumph and powered <strong>Bursaspor</strong>’s accelerated surge in the 2014–15 season. The brightest pages were written between 2015 and 2019, when <strong>Beşiktaş JK</strong> claimed back-to-back Süper Lig championships: by reinforcing the team’s tactical depth, Çiçek stitched his name, thread by thread, into the shadow of those trophies.",
+                "bio3": "During the same period he also played a key role in the <strong>Turkey senior national team</strong>’s successful European Championship qualifying campaign, providing touch-line analytics that proved decisive. The <em>in-game intuition</em> he intertwines with analytical elegance has elevated the performance bar of every club he has served. Today, Şeref Çiçek is hailed not only for past victories but as a patient <em>visionary</em> and an <em>architect of a winning culture</em> who steadily expands the horizon where football and science converge.",
+                "linkedin": "LinkedIn",
+                "wikipedia": "Wikipedia",
+                "transfermarkt": "Transfermarkt",
+                "odtu": "METU Press",
+                "footer": "© 2025 Şeref Çiçek. All rights reserved."
+            },
+            de: {
+                "name": "Şeref Çiçek",
+                "position": "UEFA-Pro-lizenzierter Trainer und Sportwissenschaftler",
+                "bio1": "<strong>Assoc. Prof. Dr. Şeref Çiçek</strong> gehört zu den wenigen Persönlichkeiten, die die strenge wissenschaftliche Disziplin der Sportwissenschaft mit dem hochgetakteten Wettkampf auf dem Rasen harmonisch vereinen können. Die <em>Promotion in Sportwissenschaft</em>, die er an der Orta Doğu Teknik Üniversitesi (Middle East Technical University) abschloss, verlieh ihm die Fähigkeit, die feinsten Nuancen des Spiels mittels datenbasierter Analysen zu entschlüsseln, während ihm die UEFA-Pro-Lizenz die Tür öffnete, diesen theoretischen Reichtum in strategische Überlegenheit auf dem Platz zu verwandeln.",
+                "bio2": "Seine in der Nachwuchsabteilung von <strong>Gençlerbirliği</strong> gesäte Trainerkarriere wurde durch die internationale Vision gefestigt, die er bei <strong>FC Seoul</strong> in Südkorea gewann. Unter dem aufbrandenden Echo der Tribünen bildete er das Rückgrat des Trainerstabs beim Pokalsieg von <strong>Trabzonspor</strong> im Jahr 2010 und verlieh dem steilen Aufschwung von <strong>Bursaspor</strong> in der Saison 2014/15 zusätzlichen Schub. Die glänzendsten Kapitel entstanden jedoch zwischen 2015 und 2019, als <strong>Beşiktaş JK</strong> zwei Mal in Folge die Süper Lig gewann: Durch die Vertiefung der taktischen Dimension des Teams stickte Çiçek seinen Namen Faden für Faden in den Schatten dieser Trophäen.",
+                "bio3": "Im selben Zeitraum spielte er auch eine Schlüsselrolle in der erfolgreichen Qualifikationsserie der <strong>türkischen A-Nationalmannschaft</strong> für die Europameisterschaft, indem er an der Seitenlinie analytische Impulse setzte. Seine mit analytischer Eleganz verwobene <em>Intuition im Spiel</em> hob die Leistungsmaßstäbe jedes Vereins an, für den er tätig war. Heute gilt Şeref Çiçek über seine bisherigen Erfolge hinaus als geduldiger <em>Visionär</em> und <em>Architekt einer Gewinnerkultur</em>, der die Schnittstelle zwischen Fußball und Wissenschaft stetig erweitert.",
+                "linkedin": "LinkedIn",
+                "wikipedia": "Wikipedia",
+                "transfermarkt": "Transfermarkt",
+                "odtu": "METU Press",
+                "footer": "© 2025 Şeref Çiçek. Alle Rechte vorbehalten."
+            },
+            ko: {
+                "name": "Şeref Çiçek",
+                "position": "UEFA 프로 라이선스 코치 및 스포츠 과학자",
+                "bio1": "<strong>부교수 Dr. Şeref Çiçek</strong>은 스포츠 과학의 엄격한 학문적 규율을 푸른 그라운드의 고속 경쟁과 능숙하게 융합할 수 있는 드문 인물입니다. 중동공과대학교에서 취득한 <em>스포츠 과학 박사 학위</em>는 그에게 경기의 가장 섬세한 뉘앙스를 데이터 기반 분석으로 해독하는 능력을 부여했으며, UEFA 프로 라이선스는 이 이론적 자산을 경기장 내 전략적 우위로 전환할 수 있는 길을 열어 주었습니다.",
+                "bio2": "<strong>Gençlerbirliği</strong> 유소년 아카데미에서 뿌린 지도자 경력의 씨앗은 한국의 <strong>FC 서울 (FC Seoul)</strong>에서 얻은 국제적 비전으로 더욱 단단해졌습니다. 열정적인 함성이 울려 퍼지는 가운데 그는 <strong>Trabzonspor</strong>의 2010 터키컵 우승에서 기술진의 중추를 맡았고, <strong>Bursaspor</strong>의 2014-15 시즌 가파른 상승세에 추진력을 불어넣었습니다. 가장 눈부신 장면은 2015년부터 2019년까지 <strong>Beşiktaş JK</strong>가 연속으로 Süper Lig 정상에 오른 시기에 기록되었는데, 치첵은 팀의 전술적 깊이를 강화하며 트로피의 그림자 속에 자신의 이름을 한 땀 한 땀 새겨 넣었습니다.",
+                "bio3": "같은 시기에 그는 <strong>터키 A대표팀</strong>의 유럽선수권 예선 성공 행진에서도 터치라인에서 제공한 분석적 기여로 핵심적인 역할을 했습니다. 분석적 우아함과 어우러진 그의 <em>경기 감각</em>은 몸담은 모든 클럽의 퍼포먼스 기준을 한층 끌어올렸습니다. 오늘날 Şeref Çiçek은 과거의 영광을 넘어 축구와 과학이 만나는 지평을 꾸준히 확장하는 <em>비전가</em>이자 <em>승리 문화의 설계자</em>로 불립니다.",
+                "linkedin": "LinkedIn",
+                "wikipedia": "위키백과",
+                "transfermarkt": "Transfermarkt",
+                "odtu": "METU 프레스",
+                "footer": "© 2025 Şeref Çiçek. 모든 권리 보유."
+            }
+        };
+
+        const translations = window.translations; // shorthand
+
+        /* ----------------- LANGUAGE HANDLER ----------------- */
+        function setLanguage(lang){
+            const dict = translations[lang] || translations.tr;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.innerHTML = dict[key] || key;
+            });
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+            localStorage.setItem('lang', lang);
+        }
+
+        // Initial load: use previously chosen language or browser default
+        const userLang = localStorage.getItem('lang') || (navigator.language || 'tr').slice(0,2);
+        setLanguage(['tr','en','de', 'ko'].includes(userLang) ? userLang : 'tr');
+
+        // Button click events
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+    })();
+    </script>
 </body>
 </html>
